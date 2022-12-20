@@ -4,4 +4,4 @@ type cases = [
     
 ]
 
-type user = Replace<{name: string}, "name", {name: number}>
+type User = Replace<{name: string}, "name", {name: number}>
