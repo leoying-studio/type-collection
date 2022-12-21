@@ -6,10 +6,13 @@ type MergeParam<Params extends object, Other extends object> = {
     [K in keyof Params | keyof Other]: MergeParamValue<Params, Other, K>
 }
 
-type ParseParam<Param extends string> = Param extends `${infer Key}=${infer Value}` ? {
-    [K in Key]: Value
-} : {}
+type KeyValuePair<T extends string> = T extends `${infer K}=${infer V}` ? {
+    [P in K]: V
+} : {};
 
 type ParseQueryString<U extends string> = U extends `${infer param}&${infer Rest}` ?
-    MergeParam<ParseParam<param>, ParseQueryString<Rest>>
-    : ParseParam<U>;
+    MergeParam<KeyValuePair<param>, ParseQueryString<Rest>>
+    : KeyValuePair<U>;
+
+
+type a = ParseQueryString<"a=1&b=2&c=3">
